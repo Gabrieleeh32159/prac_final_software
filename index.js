@@ -3,10 +3,7 @@ import Morgan from "morgan"
 
 //* Initializing database *\\
 
-let users = []
-
 /* types
-
 *   Usuario = {
 *       alias: string,
 *       nombre: string,
@@ -19,8 +16,32 @@ let users = []
 *       fecha: string,
 *       texto: string
 *   } 
-
 */
+
+let users = [
+    {
+        alias: "cpaz",
+        nombre: "Christian",
+        contactos: [
+            "lmunoz",
+            "mgrau"
+        ]
+    },
+    {
+        alias: "lmunoz",
+        nombre: "Luisa",
+        contactos: [
+            "mgrau"
+        ]
+    },
+    {
+        alias: "mgrau",
+        nombre: "Miguel",
+        contactos: [
+            "cpaz"
+        ]
+    }
+]
 
 let mensajes = []
 
@@ -35,7 +56,18 @@ app.use(Morgan("dev"));
 
 //* Routes *\\
 
+app.get("/", (req, res) => {
+    res.send("Hola mundo")
+})
 
+app.get("/contactos", (req, res) => {
+    myalias = req.query.params["mialias"];
+    user = users.find(user => user.alias == myalias);
+    req.json({
+        status: 200,
+        contactos: user.contactos
+    })
+})
 
 //* Routes *\\
 
